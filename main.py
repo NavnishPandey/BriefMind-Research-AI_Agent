@@ -3,8 +3,9 @@
 from schedular.weekly_runner import WeeklyResearchAgent
 import os
 
+from huggingface_hub import login
+login("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")
 
-os.environ["HUGGINGFACE_TOKEN"] = "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"
 
 def main():
     agent = WeeklyResearchAgent()

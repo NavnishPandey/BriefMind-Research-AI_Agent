@@ -1,6 +1,5 @@
 from datetime import datetime, timedelta
 from retrievers.arxiv_fetcher import ArxivFetcher
-from retrievers.reddit_fetcher import RedditFetcher
 from retrievers.hackernews_fetcher import HackerNewsFetcher
 from retrievers.paperwithcode_fetcher import fetch_paperswithcode_papers
 from retrievers.openalex_fetcher import fetch_openalex_papers
@@ -34,7 +33,6 @@ class WeeklyResearchAgent:
 
         # Core components
         self.arxiv_fetcher = ArxivFetcher()
-        self.reddit_fetcher = RedditFetcher()
         self.hackernews_fetcher = HackerNewsFetcher()
         self.summarizer = ResearchSummarizer()
         self.storage = LocalStorage()
@@ -54,14 +52,6 @@ class WeeklyResearchAgent:
         except Exception as e:
             print(f"[ERROR] Arxiv fetch failed: {e}")
             arxiv_papers = []
-
-        try:
-            print(f"[FETCH] Fetching from Reddit...")
-            reddit_posts = self.reddit_fetcher.fetch(self.keywords, since_date)
-            print(f"[SUCCESS] Reddit: {len(reddit_posts)} posts fetched.")
-        except Exception as e:
-            print(f"[ERROR] Reddit fetch failed: {e}")
-            reddit_posts = []
 
         try:
             print(f"[FETCH] Fetching from Hacker News...")
@@ -88,7 +78,7 @@ class WeeklyResearchAgent:
             openalex_papers = []
 
 
-        all_items = arxiv_papers + reddit_posts + hackernews_posts + pwc_papers + openalex_papers
+        all_items = arxiv_papers + hackernews_posts + pwc_papers + openalex_papers
         summarized = []
 
         print(f"[INFO] Total items to process: {len(all_items)}")
