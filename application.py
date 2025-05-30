@@ -2,9 +2,10 @@
 
 from schedular.weekly_runner import WeeklyResearchAgent
 import os
-
 from huggingface_hub import login
-login("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")
+
+token=os.getenv("HUGGINGFACEHUB_API_TOKEN")
+login(token)
 
 
 def main():
